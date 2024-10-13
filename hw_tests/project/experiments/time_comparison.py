@@ -1,7 +1,7 @@
 import sys
 import os
 current = os.path.dirname(os.path.realpath(__file__))
-parent = os.path.dirname(os.path.dirname(current))
+parent = os.path.dirname(os.path.dirname(os.path.dirname(current)))
 sys.path.append(parent)
 import compiler
 import ctypes
@@ -12,7 +12,6 @@ import cl_utils
 import unittest
 import numpy as np
 import matplotlib.pyplot as plt
-epsilon = 1e-4
 import time
 
 class Homework1Test(unittest.TestCase):
@@ -20,12 +19,12 @@ class Homework1Test(unittest.TestCase):
         os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
     def test_subtract(self):
-        with open('loma_code/while.py') as f:
+        with open('../loma_code/while.py') as f:
             structs, lib = compiler.compile(f.read(),target = 'openMpi',output_filename = '_code/while')
         _dfloat = structs['_dfloat']
         num_worker = 100
         px_x = [_dfloat(1.0, 0.5)]*num_worker
-        px_y = [1000000000]*num_worker
+        px_y = [100000]*num_worker
         input1 = (_dfloat * len(px_x))(*px_x)
         input2 = (ctypes.c_int * len(px_y))(*px_y)
         py_y = [_dfloat(0, 0)] * num_worker
@@ -47,7 +46,7 @@ class Homework1Test(unittest.TestCase):
         #     assert flag
 
     # def test_while_loop_fwd(self):
-    #     with open('/Users/jashmakhija/UCSD/Spring_2024/Differentiable_programming/Differentiable_programming/hw_tests/hw3/loma_code/while_loop_fwd.py') as f:
+    #     with open('../../hw3/loma_code/while_loop_fwd.py') as f:
     #         structs, lib = compiler.compile(f.read(),target = 'c',output_filename = '_code/while_loop_fwd1')
     #     _dfloat = structs['_dfloat']
     #     # x = _dfloat(1.23, 0.4)
